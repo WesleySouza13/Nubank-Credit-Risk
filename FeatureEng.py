@@ -16,7 +16,7 @@ class FeatureEng(BaseEstimator, TransformerMixin):
     
         
         # criar novas variaveis : score3, n_issues 
-        #df['n_bankruptcies_flag'] = (df['n_bankruptcies'] > 1).astype(int)
+        df['n_bankruptcies_flag'] = (df['n_bankruptcies'] > 1).astype(int)
         #df['score_per_issue'] = df['score_3'] * df['n_issues']
         #df['score_per_bankruptcies_flag'] = df['score_3'] * df['n_bankruptcies_flag']
         #df['log_n_bankruptcies'] = np.log1p(df['n_bankruptcies'])

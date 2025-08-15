@@ -3,5 +3,6 @@
 
 # **Projeto: Risco de Crédito - Nubank**
 
-**Introduçao:**
+**Introduçao: 👋**
+
 Este projeto tem como objetivo analisar e modelar uma soluçao para o problema de inadimplencia, utilizando dados do Nubank. Este projeto foi desenvolvido por mim, Wesley Matos, durante meus estudos sobre modelagem de risco, especificamente em risco de crédito. 

@@ -1,4 +1,4 @@
-<img width="1440" height="1444" alt="image" src="https://github.com/user-attachments/assets/5ec60f9a-f9c9-4357-b24c-4bf6cfc846ff" />
+<img width="293" height="172" alt="image" src="https://github.com/user-attachments/assets/f760a058-04d2-48e7-8376-b18ec401d667" />
 
 
 # **Projeto: Risco de Crédito - Nubank**

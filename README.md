@@ -16,23 +16,34 @@ A solução se baseia na construção de um modelo de Application Score, onde ut
 **Estrutura do Projeto 🗂️**
 
 ├── 📁 app/
+
 ├── 📁 dados/
 │ ├── 📄 aquisição_train.csv
 │ ├── 📄 data_newTarget.csv
 │ └── 📄 data_tratado.csv
+
 ├── 📁 modelos/
+
 ├── 📁 cadernos/
 │ ├── 📝 EDA.ipynb
 │ └── 📝 modelagem.ipynb
+
 ├── 📁 optuna/
 │ ├── 📝 DecisionTreeOptuna.ipynb
 │ ├── 📝 LogisticOptuna.ipynb
 │ └── 📝 XGBoostOptuna.ipynb
+
 ├── ⚙️ binarizer.py
+
 ├── 🖼️ Decision_tree_viz.png
+
 ├── 📄 decision_tree.dot
+
 ├── ⚙️ FeatureEng.py
+
 ├── 📄 requirements.txt
+
 ├── 📄 .gitignore
+
 └── 📄 .pre-commit-config.yaml
 

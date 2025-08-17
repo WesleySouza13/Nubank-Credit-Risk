@@ -17,15 +17,20 @@ A solução se baseia na construção de um modelo de Application Score, onde ut
 
 RISK NU
 ├── app/
+
 ├── data/
+
 │   ├── acquisition_train.csv
 │   ├── data_newTarget.csv
 │   └── data_tratado.csv
 ├── models/
+
 ├── notebooks/
+
 │   ├── EDA.ipynb
 │   └── modeling.ipynb
 ├── optuna/
+
 │   ├── DecisionTreeOptuna.ipynb
 │   ├── LogisticOptuna.ipynb
 │   └── XGBoostOptuna.ipynb

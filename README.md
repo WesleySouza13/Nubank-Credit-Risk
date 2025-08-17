@@ -18,19 +18,27 @@ A solução se baseia na construção de um modelo de Application Score, onde ut
 ├── 📁 app/
 
 ├── 📁 dados/
+
 │ ├── 📄 aquisição_train.csv
+
 │ ├── 📄 data_newTarget.csv
+
 │ └── 📄 data_tratado.csv
 
 ├── 📁 modelos/
 
 ├── 📁 cadernos/
+
 │ ├── 📝 EDA.ipynb
+
 │ └── 📝 modelagem.ipynb
 
 ├── 📁 optuna/
+
 │ ├── 📝 DecisionTreeOptuna.ipynb
+
 │ ├── 📝 LogisticOptuna.ipynb
+
 │ └── 📝 XGBoostOptuna.ipynb
 
 ├── ⚙️ binarizer.py

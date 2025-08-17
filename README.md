@@ -12,3 +12,28 @@ Este projeto tem como objetivo analisar e modelar uma solução para o problema 
 A concessão de crédito é uma parte importante no contexto bancário, onde podemos encontrar ganhos, mas também corremos o risco de perdas.
 O projeto foi baseado na modelagem de algoritmos que identificam um possível problema futuro ou uma possível perda para a instituição.
 A solução se baseia na construção de um modelo de Application Score, onde utilizamos informações estáticas do solicitante no momento da análise de crédito.
+
+**Estrutura do Projeto 🗂️**
+
+RISK NU
+├── app/
+├── data/
+│   ├── acquisition_train.csv
+│   ├── data_newTarget.csv
+│   └── data_tratado.csv
+├── models/
+├── notebooks/
+│   ├── EDA.ipynb
+│   └── modeling.ipynb
+├── optuna/
+│   ├── DecisionTreeOptuna.ipynb
+│   ├── LogisticOptuna.ipynb
+│   └── XGBoostOptuna.ipynb
+├── .gitignore
+├── .pre-commit-config.yaml
+├── binarizer.py
+├── Decision_tree_viz.png
+├── decision_tree.dot
+├── FeatureEng.py
+└── requirements.txt
+

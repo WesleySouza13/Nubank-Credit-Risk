@@ -1,4 +1,4 @@
-<img width="640" height="354" alt="image" src="https://github.com/user-attachments/assets/fbfcfb35-e5fe-4e65-8c83-38aa54a92650" />
+<img width="1440" height="1444" alt="image" src="https://github.com/user-attachments/assets/5ec60f9a-f9c9-4357-b24c-4bf6cfc846ff" />
 
 
 # **Projeto: Risco de Crédito - Nubank**
@@ -17,10 +17,10 @@ A solução se baseia na construção de um modelo de Application Score, onde ut
 
 ├── 📁 app/
 ├── 📁 dados/
-│ ├── 📄 acquisition_train.csv
+│ ├── 📄 aquisição_train.csv
 │ ├── 📄 data_newTarget.csv
 │ └── 📄 data_tratado.csv
-├── 📁 models/
+├── 📁 modelos/
 ├── 📁 cadernos/
 │ ├── 📝 EDA.ipynb
 │ └── 📝 modelagem.ipynb

@@ -4,7 +4,7 @@ import pandas as pd
 import joblib
 
 app = FastAPI()
-model = joblib.load('C:\\Users\\souza\\OneDrive\\Área de Trabalho\\Risk Nubank\\XGBoost.pkl')
+model = joblib.load('C:\Users\souza\OneDrive\Área de Trabalho\Risk Nubank\DecisionTree.pkl')
 class ModelInput(BaseModel):
         score_3:float
         risk_rate:float
@@ -14,8 +14,11 @@ class ModelInput(BaseModel):
         n_issues:float
         ok_since:float
         n_bankruptcies:float
-        score_rating:str
-        situation:str
+        external_data_provider_credit_checks_last_year:int
+        external_data_provider_credit_checks_last_month:int
+        external_data_provider_credit_checks_last_2_year:int
+        reported_income:int
+        score_rating_enc:int
 @app.get('/')
 def home():
         return{'api no ar'}

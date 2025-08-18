@@ -2,8 +2,12 @@ digraph Tree {
 node [shape=box, style="filled", color="black", fontname="helvetica"] ;
 edge [fontname="helvetica"] ;
 0 [label="risk_rate <= 0.285\ngini = 0.5\nsamples = 33284\nvalue = [16642.0, 16642.0]\nclass = 0", fillcolor="#ffffff"] ;
-1 [label="gini = 0.0\nsamples = 16360\nvalue = [16642.0, 0.0]\nclass = 0", fillcolor="#e58139"] ;
+1 [label="gini = 0.0\nsamples = 16424\nvalue = [16642.0, 0.0]\nclass = 0", fillcolor="#e58139"] ;
 0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
-2 [label="gini = -0.0\nsamples = 16924\nvalue = [0.0, 16642.0]\nclass = 1", fillcolor="#399de5"] ;
+2 [label="n_bankruptcies <= 0.5\ngini = 0.0\nsamples = 16860\nvalue = [0.0, 16642.0]\nclass = 1", fillcolor="#399de5"] ;
 0 -> 2 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+3 [label="gini = 0.0\nsamples = 15498\nvalue = [0.0, 15297.611]\nclass = 1", fillcolor="#399de5"] ;
+2 -> 3 ;
+4 [label="gini = 0.0\nsamples = 1362\nvalue = [0.0, 1344.389]\nclass = 1", fillcolor="#399de5"] ;
+2 -> 4 ;
 }

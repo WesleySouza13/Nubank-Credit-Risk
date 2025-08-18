@@ -13,13 +13,13 @@ class binarizer(BaseEstimator, TransformerMixin):
         def bin(row):
             val = row[self.col]
             if val < 1500:
-                return 'low_income'
+                return 1 # grupo baixa renda
             elif val < 3500:
-                return 'medium_income'
+                return 2 # renda media
             elif val < 7000:
-                return 'good_income'
+                return 3 # renda boa
             else:
-                return 'excellent_income'
+                return 4 # renda otima
 
         df[self.col + '_bin'] = df.apply(bin, axis=1)
         return df

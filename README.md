@@ -105,7 +105,27 @@ A variável-alvo estava representada como valores booleanos, distribuída em Tru
 A lógica aplicada foi a seguinte:
 
 df2['target_default'] = df2['target_default'].replace(True, 1)
+
 df2['target_default'] = df2['target_default'].replace(False, 0)
+
+Veja graficamente o resultado da distribuição do target:
+
+<img width="1003" height="682" alt="image" src="https://github.com/user-attachments/assets/d935f0c3-35ae-48bb-8ba8-403a05f2dec1" />
+
+Ja indicando a presença de desbalanceamento das classes, comportamento comum e esperado em problemas de risco de crédito. 
+
+# Tratamento de Valores infinitos 
+A coluna reported_income representa a característica da base de dados que indica se o cliente possui renda declarada. Ela deveria se comportar como uma variável contínua ou categórica binária (0 ou 1). No entanto, a presença de valores np.inf alterou completamente o seu comportamento.
+
+Para tratar esse problema, apliquei a seguinte lógica:
+
+df2['reported_income'] = df2['reported_income'].replace([np.inf, -np.inf], np.nan)
+
+Dessa forma, todos os valores infinitos foram substituídos por valores nulos. O total de valores nulos nessa variável foi de 66 registros, o que não foi estatisticamente significativo para impactar a análise, de modo que a exclusão desses casos não trouxe prejuízo relevante à base.
+
+# O problema das variaveis: 'external_data_provider_credit_checks_last_year', 'external_data_provider_credit_checks_last_2_year'
+
+
 
 
 

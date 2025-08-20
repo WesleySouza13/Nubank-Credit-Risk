@@ -139,14 +139,14 @@ A lógica utilizada foi a seguinte:
 <img width="910" height="478" alt="image" src="https://github.com/user-attachments/assets/12758db6-82ec-4aa5-996b-6136c71820ec" />
 
 **A respeito da analise multivariada**
+
 Meu foco neste case não foi desenvolver uma análise exploratória aprofundada além de compreender a distribuição dos dados e identificar alguns padrões relevantes, mas sim construir um modelo de application score robusto. Por esse motivo, não incluí os resultados da análise exploratória neste README.
 
 No entanto, caso você queira visualizar o que foi feito no EDA, sinta-se à vontade para acessar o arquivo EDA.ipynb, localizado na pasta notebooks.
 
 # Modelagem 
 
-
-
+Selecionei 3 modelos que sao muito utilizados para o problema de aplication score: Regressao logistica (logit), Arvore de Decisao e XGBoost. 
 
 
 

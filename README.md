@@ -82,7 +82,7 @@ Essas variáveis dizem respeito ao comportamento financeiro dos clientes.
 | **external\_data\_provider\_credit\_checks\_last\_year**    | Número de consultas ao crédito feitas por terceiros no último ano.              |
 | **external\_data\_provider\_credit\_checks\_last\_month**   | Número de consultas ao crédito feitas por terceiros no último mês.              |
 | **external\_data\_provider\_credit\_checks\_last\_2\_year** | Número de consultas ao crédito feitas por terceiros nos últimos 2 anos.         |
-
+| **reported_income**                                         | Se o cliente possui renda declarada (0 ou 1)                                    |
 
 # Tratamento de Dados
 
@@ -137,6 +137,13 @@ Para tratar o problema de valores ausentes nas colunas mencionadas anteriormente
 A lógica utilizada foi a seguinte:
 
 <img width="910" height="478" alt="image" src="https://github.com/user-attachments/assets/12758db6-82ec-4aa5-996b-6136c71820ec" />
+
+**A respeito da analise multivariada**
+Meu foco neste case não foi desenvolver uma análise exploratória aprofundada além de compreender a distribuição dos dados e identificar alguns padrões relevantes, mas sim construir um modelo de application score robusto. Por esse motivo, não incluí os resultados da análise exploratória neste README.
+
+No entanto, caso você queira visualizar o que foi feito no EDA, sinta-se à vontade para acessar o arquivo EDA.ipynb, localizado na pasta notebooks.
+
+# Modelagem 
 
 
 

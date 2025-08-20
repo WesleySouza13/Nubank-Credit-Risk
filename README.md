@@ -124,6 +124,22 @@ df2['reported_income'] = df2['reported_income'].replace([np.inf, -np.inf], np.na
 Dessa forma, todos os valores infinitos foram substituídos por valores nulos. O total de valores nulos nessa variável foi de 66 registros, o que não foi estatisticamente significativo para impactar a análise, de modo que a exclusão desses casos não trouxe prejuízo relevante à base.
 
 # O problema das variaveis: 'external_data_provider_credit_checks_last_year', 'external_data_provider_credit_checks_last_2_year'
+As colunas external_data_provider_credit_checks_last_year e external_data_provider_credit_checks_last_2_year representam o número de consultas que o cliente realizou no último ano e nos últimos dois anos, respectivamente. Isso evidencia que são variáveis bastante significativas para a análise do negócio. Por esse motivo, não seria adequado simplesmente excluí-las ou eliminar a grande quantidade de valores ausentes (mais de 50% da base).
+
+Diante disso, decidi implementar um método de imputação diferente do que estávamos utilizando até então.
+
+# Inputação por aprendizado supervisionado
+
+Para tratar o problema de valores ausentes nas colunas mencionadas anteriormente, decidi implementar um algoritmo de Machine Learning para prever esses possíveis valores faltantes. O modelo escolhido foi o HistGradientBoostingClassifier, que lida de forma eficiente com valores ausentes presentes nos dados.
+
+**Documentação do modelo**📖: https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html
+
+A lógica utilizada foi a seguinte:
+
+<img width="910" height="478" alt="image" src="https://github.com/user-attachments/assets/12758db6-82ec-4aa5-996b-6136c71820ec" />
+
+
+
 
 
 

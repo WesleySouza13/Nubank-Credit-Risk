@@ -191,16 +191,54 @@ Na parte de modelagem do projeto, selecionei três modelos comumente utilizados 
 <img width="1189" height="790" alt="image" src="https://github.com/user-attachments/assets/4cc6f445-7fad-4113-8bf9-bc6827c5857d" />
 <img width="1127" height="701" alt="image" src="https://github.com/user-attachments/assets/ec253d96-c453-4f89-a594-5022e416e709" />
 
+A aparente “boa separação” dos modelos, observada na matriz de confusão, é ilusória. 
+Considerando isso, seguem as métricas de avaliação dos modelos:
 
+<img width="805" height="133" alt="image" src="https://github.com/user-attachments/assets/e7fe5d62-b38c-4df7-b72b-3538c330d145" />
 
+Realizei um cross-validation para verificar se os resultados insatisfatórios poderiam ser causados pela divisão dos dados em folds, mas os resultados continuaram abaixo do esperado:
 
+<img width="596" height="144" alt="image" src="https://github.com/user-attachments/assets/5668e1be-8f5b-4a2c-a081-2198af5a8536" />
 
+Com isso, prossegui com uma análise de multicolinearidade para identificar linearidades e redundâncias no dataset.
 
+# Analise de Multicolinearidade - VIF 
 
+Utilizando o algoritmo de Fator de Inflação da Variância (Variance Inflation Factor), disponível na biblioteca statsmodels pelo método statsmodels.stats.outliers_influence.variance_inflation_factor, obtive as seguintes métricas:
 
+<img width="554" height="456" alt="image" src="https://github.com/user-attachments/assets/c7d76a48-85fd-4b83-af36-e70089fdf1fd" />
 
+Onde temos os seguintes intervalos: 
 
+ valores entre 0 e 5 indicam baixa multicolinearidade
+ 
+ entre 6 e 10 sugerem presença de multicolinearidade aceitável
+ 
+ entre 10 e 13 representam um limite pessoal de multicolinearidade
+ 
+ valores acima de 14 indicam problema significativo de multicolinearidade
 
+ Com isso, temos a variável reported_income como um grande indicador de multicolinearidade.
 
+Modelos baseados em árvores não sofrem com problemas de multicolinearidade, porém estamos trabalhando também com um modelo linear (regressão logística), que é bastante afetado por esse problema, impactando seu desempenho.
 
+Um ponto que gosto de destacar é que a multicolinearidade implica dispersão e redundância de informações nos dados, ou seja, teremos vetores informando essencialmente a mesma coisa para o modelo. Com isso em mente, surge a dúvida: esse problema não deveria indicar um desempenho artificialmente alto para o modelo? Por que ele está apresentando underfitting? Esse foi o meu primeiro questionamento sobre meu target.
+
+Seguimos...
+
+# Criaçao da Classe FeatureEng
+
+Para enriquecer os modelos com mais informações, decidi criar uma classe que realiza esse processamento sem causar Data Leakage (vazamento de dados). Assim surgiu a instância FeatureEng, que recebe os valores x (dados observados) e os transforma em novas informações.
+
+Observação: a criação dessa nova classe também foi pensada para encapsulamento em uma pipeline, permitindo que os dados já sejam transformados diretamente no ambiente de produção.
+
+Paralelamente, criei a classe Binarize.py, responsável por criar bins de renda. A classe FeatureEng herda essa funcionalidade, garantindo que a transformação de dados seja organizada e reutilizável.
+
+**FeatureEng**
+
+<img width="1305" height="868" alt="image" src="https://github.com/user-attachments/assets/992ae8cc-cb1f-4d83-975b-309387762618" />
+
+**Binarize**
+
+<img width="630" height="698" alt="image" src="https://github.com/user-attachments/assets/8e89887d-e3ff-405e-a9fd-1970ce4752c9" />
 

@@ -144,9 +144,44 @@ Meu foco neste case não foi desenvolver uma análise exploratória aprofundada 
 
 No entanto, caso você queira visualizar o que foi feito no EDA, sinta-se à vontade para acessar o arquivo EDA.ipynb, localizado na pasta notebooks.
 
-# Modelagem 
+# Estudo de Causalidade
 
-Selecionei 3 modelos que sao muito utilizados para o problema de aplication score: Regressao logistica (logit), Arvore de Decisao e XGBoost. 
+Neste projeto, ao contrário de trabalhos anteriores, busquei explorar um estudo de causalidade. Atualmente, estou aprofundando meus estudos nesse tema e aplicar os conceitos neste projeto é uma forma de praticar o que venho aprendendo. O objetivo não foi desenvolver um estudo causal extenso, mas compreender a influência de algumas variáveis sobre a variável resposta Y. 
+
+Neste estudo, conduzi uma exploração de causalidade utilizando a função logit (regressão logística) como meu discriminante.
+
+Dividi os elementos do estudo em: variáveis de tratamento (𝑥), variável resposta (𝑦)e variáveis de controle (𝑐𝑜𝑛𝑓).
+
+Para orientar a análise, defini algumas questões específicas:
+
+1) Pergunta causal: “Quais variáveis realmente impactam o risco de inadimplência de um cliente, controlando por outras variáveis relevantes?”
+
+2) Questão específica: “Qual é o efeito das variáveis external_data_provider_credit_checks_last_year e external_data_provider_credit_checks_last_month sobre o alvo target_default?”
+
+Para responder à primeira pergunta, realizei o seguinte estudo: Selecionei as variáveis significativas para o alvo y, sendo a variável de tratamento n_issues, a variável resposta target_default e as variáveis de controle score_3, credit_limit, n_defaulted_loans e ok_since. Em seguida, treinei a função logit para estimar o efeito dessas variáveis sobre o risco de inadimplência. 
+Os resultados obtidos foram os seguintes:
+
+<img width="877" height="453" alt="image" src="https://github.com/user-attachments/assets/75d90708-e2b6-4572-ac53-18784ef3ec8f" />
+
+- A variável n_defaulted_loans apresentou coeficiente positivo, indicando que dívidas passadas podem aumentar o risco de inadimplência. No entanto, o p-valor maior que 0,05 mostra que esse efeito não é estatisticamente significativo, portanto não podemos afirmar com confiança que dívidas passadas sejam um fator causal decisivo para um futuro modelo.
+
+- Variáveis como credit_limit e ok_since mostraram efeitos estatisticamente significativos, indicando que são características relevantes para a modelagem. O efeito negativo de credit_limit sugere que limites de crédito mais altos estão associados a menor risco de inadimplência, enquanto o efeito negativo de ok_since indica que clientes com maior tempo de relacionamento tendem a apresentar menor risco.
+
+- A variável n_issues também se mostrou importante, com coeficiente de aproximadamente 1%, impactando positivamente o modelo. Isso significa que quanto maior o número de problemas, maior a probabilidade de inadimplência.
+
+- Por fim, a variável score_3 não apresentou influência relevante, mostrando-se menos significativa do que esperado para o problema em questão.
+
+Para responder à segunda pergunta, utilizei como variáveis de tratamento external_data_provider_credit_checks_last_year e external_data_provider_credit_checks_last_month, sem incluir variáveis de controle. 
+
+Os resultados obtidos foram os seguintes:
+
+<img width="1144" height="354" alt="image" src="https://github.com/user-attachments/assets/02b580a4-f85c-424d-94ff-6e8ff378a368" />
+
+- Tanto external_data_provider_credit_checks_last_year quanto external_data_provider_credit_checks_last_month se mostraram variáveis significativas para explicar a inadimplência. Seus coeficientes negativos indicam que um maior número de consultas externas está associado a menor risco de inadimplência.
+
+
+
+
 
 
 

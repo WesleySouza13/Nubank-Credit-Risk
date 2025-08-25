@@ -180,6 +180,21 @@ Os resultados obtidos foram os seguintes:
 - Tanto external_data_provider_credit_checks_last_year quanto external_data_provider_credit_checks_last_month se mostraram variáveis significativas para explicar a inadimplência. Seus coeficientes negativos indicam que um maior número de consultas externas está associado a menor risco de inadimplência.
 
 
+# Modelagem
+
+Na parte de modelagem do projeto, selecionei três modelos comumente utilizados no cenário de Application Score: regressão logística, árvores de decisão e XGBoost. As métricas para avaliação dos modelos foram escolhidas considerando previamente a existência de desbalanceamento de classes. Com isso, os resultados da primeira rodada de treinamento, utilizando apenas os dados tratados, foram os seguintes:
+
+<img width="1189" height="790" alt="image" src="https://github.com/user-attachments/assets/9f0378d9-8866-4492-a7ba-9cd0c1110767" />
+<img width="1127" height="701" alt="image" src="https://github.com/user-attachments/assets/0976e5ff-bf40-4284-8f44-ecabe5027c33" />
+<img width="1189" height="790" alt="image" src="https://github.com/user-attachments/assets/4ccd238d-c0e4-46e5-814c-63c20178df62" />
+<img width="1127" height="701" alt="image" src="https://github.com/user-attachments/assets/f293fbd4-f775-4fc9-a406-5860d49b388e" />
+<img width="1189" height="790" alt="image" src="https://github.com/user-attachments/assets/4cc6f445-7fad-4113-8bf9-bc6827c5857d" />
+<img width="1127" height="701" alt="image" src="https://github.com/user-attachments/assets/ec253d96-c453-4f89-a594-5022e416e709" />
+
+
+
+
+
 
 
 

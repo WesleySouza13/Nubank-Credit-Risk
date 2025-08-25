@@ -202,6 +202,20 @@ Realizei um cross-validation para verificar se os resultados insatisfatórios po
 
 Com isso, prossegui com uma análise de multicolinearidade para identificar linearidades e redundâncias no dataset.
 
+**Mini dicionario das metricas**
+
+Deixarei um mini dicionario das metricas apenas para didatica:
+| Métrica          | Significado                        |
+| ---------------- | ---------------------------------- |
+| **logloss**      | Erro nas probabilidades            |
+| **brier\_score** | Calibração das probabilidades      |
+| **f1\_score**    | Equilíbrio entre precisão e recall |
+| **recall**       | Acerto dos positivos               |
+| **roc\_auc**     | Separação entre classes            |
+| **ks**           | Distância entre TPR e FPR          |
+
+Ks será a métrica discriminante nesse estudo
+
 # Analise de Multicolinearidade - VIF 
 
 Utilizando o algoritmo de Fator de Inflação da Variância (Variance Inflation Factor), disponível na biblioteca statsmodels pelo método statsmodels.stats.outliers_influence.variance_inflation_factor, obtive as seguintes métricas:
@@ -241,4 +255,112 @@ Paralelamente, criei a classe Binarize.py, responsável por criar bins de renda.
 **Binarize**
 
 <img width="630" height="698" alt="image" src="https://github.com/user-attachments/assets/8e89887d-e3ff-405e-a9fd-1970ce4752c9" />
+
+Inclusive, alguns bins na classe FeatureEng foram desenvolvidos utilizando a biblioteca OptimalBinning. Ao longo desta apresentação, explicarei um pouco mais sobre esse processo
+
+# SHAP Values
+
+Para entender a influencia das variaveis em nossos modelos, realizei um estudo utilizando o SHAP. 
+
+<img width="813" height="700" alt="image" src="https://github.com/user-attachments/assets/0094220b-3408-44fa-85ce-378ff9f3e1da" />
+
+O resultado mostra que a variável renda não é uma boa feature para nossos modelos. Isso se deve pela influência sazonal da variável.
+
+Vou explicar rapidamente:
+
+Em nosso país, quem trabalha de carteira assinada (CLT) tem direito a 1 salário a mais na conta em uma época específica do ano, isso se chama 13º salário. Vamos supor que nosso amigo Joãozinho recebe R$ 2.500,00 no mês. Significa que a nossa classe Binarize vai classificar ele como renda média (2), certo? Mas, no mês de novembro, Joãozinho recebe 1 salário a mais em sua conta, isso quer dizer que vai ter o salário de R$ 2.500 + o 13º salário, totalizando R$ 5.000. E, nesse bendito mês, ele decide fazer uma consulta para conseguir um empréstimo, por exemplo. Se o modelo aprende que a renda é um discriminante, ele não vai avaliar todo o comportamento do Joãozinho antes da concessão, mas sim o que ele apresenta na hora da concessão. Isso cria um problema de falso comportamento, fazendo com que instituições financeiras não avaliem o cliente diretamente pela sua renda, pois é um indicador sazonal.
+
+Modelos de Behavior Score se saem (e são indicados) muito bem nesse tipo de problema.
+
+
+# OptimalBinning
+
+Realizei um estudo utilizando o OptimalBinning e esses foram os resultados: 
+
+<img width="896" height="462" alt="image" src="https://github.com/user-attachments/assets/0d18b200-382b-494b-86b8-17fd4f9763f6" />
+
+<img width="651" height="552" alt="image" src="https://github.com/user-attachments/assets/7903abc0-6ff9-424f-bcfc-cf2c130b6773" />
+
+<img width="648" height="552" alt="image" src="https://github.com/user-attachments/assets/9b2d2586-ba48-4e01-93e5-44ca1f7a5378" />
+
+
+Analisando a coluna income, vemos que ela impacta negativamente a capacidade do modelo em conceder crédito. Isso se deve à característica sazonal da variável, ou seja, ela não reflete com precisão a realidade.
+
+Se eu tiver uma renda baixa hoje, meu crédito poderá ser negado, independentemente do meu comportamento financeiro. Porém, se amanhã eu receber R$ 1.000 a mais do que o habitual, o modelo poderá aprovar meu crédito.
+
+As estatísticas observadas são as seguintes:
+
+Apenas 0,053545 ou 5% da carteira de clientes teria peso na renda para influenciar a decisão do modelo (WoE: 0,422522).
+
+18% da carteira influencia negativamente a decisão do modelo, com importância negativa de -0,078047, mesmo mantendo comportamento conservador e vários meses em ok_since.
+
+
+# Problema de Target 
+
+Ao analisar a base de clientes inadimplentes, percebi que o comportamento dos mesmos não remete a um possível calote. Por exemplo, há clientes com mais de 32 meses em "ok" (sem boletos atrasados), indicador de risco baixo, boa renda (apesar de não ser uma variável tão significativa), sem falências etc., sendo classificados como 1 (inadimplentes). Ao contrário, clientes que estavam com falências, dívidas em aberto, poucos ou nenhum mês em "ok" foram classificados como 0 (adimplentes). 
+
+# Modelando novo target 
+
+Para criar um novo Y, não tratei isso de qualquer maneira. Primeiro, selecionei variáveis que são bons indicadores de risco, como número de empréstimos inadimplentes, número de problemas, falências, taxa de risco, consultas externas no último mês e ano, além do score_rating_enc.
+
+Com essas variáveis, treinei um modelo de árvore de decisão com profundidade máxima igual a 3, balanceando as classes para evitar viés. Esse modelo serviu como uma base para gerar um score de risco, onde a saída foi a probabilidade prevista de inadimplência para cada cliente.
+
+A partir desse score, calculei métricas de avaliação como AUC, log loss e também a curva ROC para obter o KS (Kolmogorov-Smirnov). O melhor ponto de corte foi definido pelo threshold que maximiza a separação entre bons e maus pagadores.
+
+Com esse corte, gerei um novo target chamado y_target. Esse novo Y representa um grupo de clientes classificados como de alto risco (1) ou baixo risco (0), com base na probabilidade prevista pelo modelo e no ponto de corte calculado.
+
+Por fim, validei a separação observando a taxa real de inadimplência em cada grupo do novo target, confirmando que o modelo conseguiu criar uma nova variável resposta que reflete de forma mais consistente o risco de crédito.
+
+<img width="613" height="139" alt="image" src="https://github.com/user-attachments/assets/5632893c-b160-44ce-a1e1-ebcafcbb416f" />
+
+# Nova rodada de treinamento 
+
+Após novas rodadas de treinamento, decidi implementar o modelo de árvore de decisão.
+
+Defendo minha escolha com os seguintes argumentos: como havia dados com multicolinearidade, escolhi não explorar a regressão logística, pois aplicar um PCA dificultaria a capacidade de explicabilidade do modelo, ainda mais em um problema onde entender o que está acontecendo é importante. Eu poderia excluir as variáveis redundantes para seguir com a regressão logística, mas isso faria o modelo perder informações relevantes.
+
+Por outro lado, aplicar o XGBoost poderia parecer uma ótima escolha. Porém, suas métricas excessivamente altas levantam dúvidas sobre a real capacidade de separação do modelo.
+
+Por fim, optei pelas árvores de decisão, pela sua capacidade de poda e pela clareza de interpretação. As métricas obtidas foram as seguintes:
+
+{'model_name': 'DecisionTreeClassifier', 'logloss': 2.220446049250313e-16, 'brier_score': 0.0, 'f1_score': 1.0, 'recall': 1.0, 'roc_auc': 1.0, 'ks': 1.0}
+
+# Optuna
+
+Eu apliquei a busca de paramentros utilizando o optuna em todos os modelos, mas darei prioridade em explicar o modelo onde darei sequencia com deploy.
+Para saber mais sobre os hiperparamentros dos demais modelos, acesse a pasta "optuna". 
+
+# Hiperparamentros - Árvores de decisão
+
+os parametros utilizados para a arvore de decisao pós optuna foram os seguintes:
+
+max_depth = 12 → limita a profundidade da árvore para evitar overfitting e manter o modelo explicável.
+
+min_samples_split = 11 → garante que só sejam feitos splits quando houver quantidade razoável de amostras, evitando divisões inúteis.
+
+min_samples_leaf = 6 → força cada folha a ter pelo menos 6 registros, o que suaviza a árvore e reduz ruído.
+
+max_features = None → deixa o modelo considerar todas as variáveis em cada split, aproveitando ao máximo a informação disponível.
+
+criterion = 'gini' → mede impureza de forma eficiente, sendo padrão e estável para classificação binária.
+
+random_state = 42 → garante reprodutibilidade dos resultados.
+
+class_weight = 'balanced' → corrige o desbalanceamento entre classes, ajustando os pesos automaticamente.
+
+Segue as métricas do modelo: 
+
+recall: 1.0
+
+brier_score: 0.07312192135554778
+
+AUC: 0.9136507165411707
+
+ks: 0.8273014330823415
+
+
+
+
+
+
 

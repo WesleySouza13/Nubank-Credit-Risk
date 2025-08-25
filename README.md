@@ -358,6 +358,32 @@ AUC: 0.9136507165411707
 
 ks: 0.8273014330823415
 
+# Separação de grupos homogeneos
+
+Para separar clientes pelos seus comportamentos, decidi guiar uma analise de cluster utilizando Kmeans. Onde selecionei variaveis para separar os clientes em renda, faixa de score e limite de crédito. 
+
+Primeiramente, realizei testes para calcular o numero de clusters ideais nessa divisao hoogenea. 
+
+# Teste do cotovelo 
+
+Os resultados do teste do cotovelo foram os seguintes:
+
+<img width="813" height="682" alt="image" src="https://github.com/user-attachments/assets/8bbfce57-2f03-4026-9958-afc7bad0cbc7" />
+
+O gráfico indica que o erro dos clusters apresenta uma queda mais acentuada a partir de k = 2.
+
+# Silhouette Score e Davies-Bouldin Score
+
+Com o objetivo de validar a divisão de clusters obtida pelo método do cotovelo, foram realizados testes de Silhouette Score e Davies-Bouldin Score.
+
+Os resultados foram os seguintes:
+
+<img width="972" height="208" alt="image" src="https://github.com/user-attachments/assets/90dd6e8e-4f41-4f67-83ee-a5bac2419e5c" />
+
+No caso do Silhouette Score, valores mais próximos de 1 indicam melhor separação dos clusters. Com isso, a melhor divisão se manteve em k = 2.
+
+Já no Davies-Bouldin Score, valores mais próximos de 0 representam melhor qualidade dos clusters. Diferente do Silhouette, não há um intervalo exato definido (como 0–1 ou 0–10), apenas a regra de que quanto menor, melhor.
+
 
 
 

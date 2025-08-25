@@ -360,9 +360,9 @@ ks: 0.8273014330823415
 
 # Separação de grupos homogeneos
 
-Para separar clientes pelos seus comportamentos, decidi guiar uma analise de cluster utilizando Kmeans. Onde selecionei variaveis para separar os clientes em renda, faixa de score e limite de crédito. 
+Para separar os clientes de acordo com seus comportamentos, decidi conduzir uma análise de clusters utilizando o K-Means. Para isso, selecionei variáveis relacionadas à renda, faixa de score e limite de crédito.
 
-Primeiramente, realizei testes para calcular o numero de clusters ideais nessa divisao hoogenea. 
+Primeiramente, realizei testes para calcular o número de clusters ideais nessa divisão homogênea.
 
 # Teste do cotovelo 
 

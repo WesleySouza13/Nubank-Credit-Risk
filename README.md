@@ -61,7 +61,7 @@ Eu fiz uma limpeza inicial selecionando apenas as variáveis significativas para
 Por exemplo, variáveis como: marketing_channel, profile_phone_number, shipping_zip_code, entre outras, foram descartadas.
 Com isso, criei um filtro para selecionar apenas as seguintes colunas:
 
-target_default, score_3, risk_rate, credit_limit, income, n_defaulted_loans, n_accounts, n_issues, ok_since, n_bankruptcies, external_data_provider_credit_checks_last_year, external_data_provider_credit_checks_last_month, external_data_provider_credit_checks_last_2_year.
+target_default, score_3, risk_rate, credit_limit, income, n_defaulted_loans, n_accounts, n_issues, ok_since, n_bankruptcies, external_data_provider_credit_checks_last_year, external_data_provider_credit_checks_last_month, external_data_provider_credit_checks_last_2_year e reported_income. 
 
 Essas variáveis dizem respeito ao comportamento financeiro dos clientes.
 
@@ -82,5 +82,75 @@ Essas variáveis dizem respeito ao comportamento financeiro dos clientes.
 | **external\_data\_provider\_credit\_checks\_last\_year**    | Número de consultas ao crédito feitas por terceiros no último ano.              |
 | **external\_data\_provider\_credit\_checks\_last\_month**   | Número de consultas ao crédito feitas por terceiros no último mês.              |
 | **external\_data\_provider\_credit\_checks\_last\_2\_year** | Número de consultas ao crédito feitas por terceiros nos últimos 2 anos.         |
+| **reported_income**                                         | Se o cliente possui renda declarada (0 ou 1)                                    |
+
+# Tratamento de Dados
+
+Antes de tratar qualquer valor nulo utilizando métodos de imputação, busquei identificar as colunas que possuíam o maior volume de valores fora da curva. Com esse raciocínio, obtive as seguintes colunas: ['n_accounts', 'income', 'score_3'], nas quais o tratamento de outliers não impactaria negativamente a distribuição das informações da base. Para tratar esses valores fora da curva, utilizei a técnica de Winsorização, que consiste em identificar graficamente (por meio de boxplots) os limites superiores e inferiores dos dados e, em seguida, delimitar uma porcentagem para que os valores não ultrapassem esses limites. 
+
+# Winsorização
+
+A Winsorização é uma técnica de limites estatísticos utilizada para tratar a distribuição de valores fora da curva, analisando os limites inferiores e superiores da variável em estudo. O uso da Winsorização foi justificado pela necessidade de substituir possíveis valores nulos pela média ou pela mediana, já que a presença de outliers poderia exercer forte influência e distorcer essas medidas de tendência central. 
+
+
+Resultados Winsorização: 
+
+<img width="702" height="177" alt="image" src="https://github.com/user-attachments/assets/bf4c53de-7bc3-4136-b5ad-f3591f647d56" />
+
+Após o tratamento dos outliers, os valores nulos das colunas ajustadas foram substituídos pela mediana, de modo a representar um comportamento central do cliente sem introduzir vieses adicionais na distribuição dos dados.
+
+# Tratamento de target_default
+
+A variável-alvo estava representada como valores booleanos, distribuída em True (1) e False (0). Para transformá-la em valores numéricos discretos, utilizei o método .replace() do pandas. 
+A lógica aplicada foi a seguinte:
+
+df2['target_default'] = df2['target_default'].replace(True, 1)
+
+df2['target_default'] = df2['target_default'].replace(False, 0)
+
+Veja graficamente o resultado da distribuição do target:
+
+<img width="1003" height="682" alt="image" src="https://github.com/user-attachments/assets/d935f0c3-35ae-48bb-8ba8-403a05f2dec1" />
+
+Ja indicando a presença de desbalanceamento das classes, comportamento comum e esperado em problemas de risco de crédito. 
+
+# Tratamento de Valores infinitos 
+A coluna reported_income representa a característica da base de dados que indica se o cliente possui renda declarada. Ela deveria se comportar como uma variável contínua ou categórica binária (0 ou 1). No entanto, a presença de valores np.inf alterou completamente o seu comportamento.
+
+Para tratar esse problema, apliquei a seguinte lógica:
+
+df2['reported_income'] = df2['reported_income'].replace([np.inf, -np.inf], np.nan)
+
+Dessa forma, todos os valores infinitos foram substituídos por valores nulos. O total de valores nulos nessa variável foi de 66 registros, o que não foi estatisticamente significativo para impactar a análise, de modo que a exclusão desses casos não trouxe prejuízo relevante à base.
+
+# O problema das variaveis: 'external_data_provider_credit_checks_last_year', 'external_data_provider_credit_checks_last_2_year'
+As colunas external_data_provider_credit_checks_last_year e external_data_provider_credit_checks_last_2_year representam o número de consultas que o cliente realizou no último ano e nos últimos dois anos, respectivamente. Isso evidencia que são variáveis bastante significativas para a análise do negócio. Por esse motivo, não seria adequado simplesmente excluí-las ou eliminar a grande quantidade de valores ausentes (mais de 50% da base).
+
+Diante disso, decidi implementar um método de imputação diferente do que estávamos utilizando até então.
+
+# Inputação por aprendizado supervisionado
+
+Para tratar o problema de valores ausentes nas colunas mencionadas anteriormente, decidi implementar um algoritmo de Machine Learning para prever esses possíveis valores faltantes. O modelo escolhido foi o HistGradientBoostingClassifier, que lida de forma eficiente com valores ausentes presentes nos dados.
+
+**Documentação do modelo**📖: https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html
+
+A lógica utilizada foi a seguinte:
+
+<img width="910" height="478" alt="image" src="https://github.com/user-attachments/assets/12758db6-82ec-4aa5-996b-6136c71820ec" />
+
+**A respeito da analise multivariada**
+Meu foco neste case não foi desenvolver uma análise exploratória aprofundada além de compreender a distribuição dos dados e identificar alguns padrões relevantes, mas sim construir um modelo de application score robusto. Por esse motivo, não incluí os resultados da análise exploratória neste README.
+
+No entanto, caso você queira visualizar o que foi feito no EDA, sinta-se à vontade para acessar o arquivo EDA.ipynb, localizado na pasta notebooks.
+
+# Modelagem 
+
+
+
+
+
+
+
+
 
 

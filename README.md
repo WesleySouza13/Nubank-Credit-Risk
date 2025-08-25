@@ -348,7 +348,7 @@ random_state = 42 → garante reprodutibilidade dos resultados.
 
 class_weight = 'balanced' → corrige o desbalanceamento entre classes, ajustando os pesos automaticamente.
 
-Segue as métricas do modelo: 
+**Segue as métricas do modelo:** 
 
 recall: 1.0
 

@@ -3,8 +3,11 @@ from fastapi import FastAPI
 import pandas as pd 
 import joblib
 
+# setando aplicação
 app = FastAPI()
-model = joblib.load('C:\Users\souza\OneDrive\Área de Trabalho\Risk Nubank\DecisionTree.pkl')
+model_path = 'C:\\Users\\souza\\OneDrive\\Área de Trabalho\\Risk Nubank\\DecisionTree.pkl'
+# carregando modelo 
+model = joblib.load(model_path)
 class ModelInput(BaseModel):
         score_3:float
         risk_rate:float
@@ -22,17 +25,14 @@ class ModelInput(BaseModel):
 @app.get('/')
 def home():
         return{'api no ar'}
-
 @app.post('/predict')
 def predict(data:ModelInput):
-        if model is None:
-                print('modelo nao encontrado')
         try:
-                df = pd.DataFrame([data.dict()])
+                df = pd.DataFrame([data])
                 y_pred = model.predict(df)
                 y_proba = model.predict_proba(df)[:,1]
-
-
-                return {f'saida: {y_pred} e probabilidade: {y_proba[0]*100:.2f}%'}
+                
+                return {'saida:': int(y_pred[0]),
+                        'probabilidade': float(y_proba[0])}
         except Exception as e:
-                return {e}
+                return {f'erro {str(e)}'}

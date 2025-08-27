@@ -11,3 +11,5 @@ README
 **__pycache__
 .venv
 venv
+predict
+train

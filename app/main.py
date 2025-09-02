@@ -2,10 +2,13 @@ from pydantic import BaseModel
 from fastapi import FastAPI
 import pandas as pd 
 import joblib
+import os 
+import sys
+sys.path.append(r'C:\\Users\\souza\\OneDrive\\Área de Trabalho\\Risk Nubank')
 
 # setando aplicação
 app = FastAPI()
-model_path = 'C:\\Users\\souza\\OneDrive\\Área de Trabalho\\Risk Nubank\\DecisionTree.pkl'
+model_path = os.path.join('DecisionTree.pkl')
 # carregando modelo 
 model = joblib.load(model_path)
 class ModelInput(BaseModel):
@@ -36,3 +39,4 @@ def predict(data:ModelInput):
                         'probabilidade': float(y_proba[0])}
         except Exception as e:
                 return {f'erro {str(e)}'}
+        

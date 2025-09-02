@@ -16,7 +16,9 @@ csv = os.path.join('data', 'data_newTarget.csv')
 
 # importando dados e fazendo split
 df = pd.read_csv(csv)
-drop = ['y_target']
+
+print(df.columns)
+drop = ['y_target', 'Unnamed: 0', 'target_default']
 x = df.drop(drop, axis=1)
 y = df['y_target']
 x_train, x_test, y_train, y_test = train_test_split(x,y, test_size=0.2, stratify=y)

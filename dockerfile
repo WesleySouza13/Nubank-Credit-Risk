@@ -8,8 +8,8 @@ COPY requirements.txt requirements.txt
 
 RUN pip install -r requirements.txt 
 
-COPY . . /modelo-aplicationScore/ 
+COPY . . 
 
 EXPOSE 10000
 
-CMD ['python', '-m', 'uvicorn', 'main:app', '--reload', 'port', '10000', 'host', '0.0.0.0']
+CMD ["python", "-m", "uvicorn", "app.main:app", "--reload", "--port", "10000"]

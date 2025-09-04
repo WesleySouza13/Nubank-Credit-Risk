@@ -38,4 +38,3 @@ def predict(data:ModelInput):
                 return {'saida:': int(y_pred[0])}
         except Exception as e:
                 return {f'erro {str(e)}'}
-        

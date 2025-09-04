@@ -1,13 +1,17 @@
-FROM python:3.11.9
+FROM python:3.11.9-slim
 
-WORKDIR /modelo-aplicationScore
+WORKDIR /app
 
-COPY requirements.txt . 
+# copiar apenas requirements primeiro para cache de instalação
+COPY requirements.txt .
 
-RUN pip install --no-cache-dir -r requirements.txt 
+RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir gunicorn
 
-COPY . . 
+# copiar o restante do código
+COPY . .
 
 EXPOSE 10000
 
-CMD ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "10000"]
+# rodar FastAPI com 4 workers
+CMD ["gunicorn", "app.main:app", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "-b", "0.0.0.0:10000"]

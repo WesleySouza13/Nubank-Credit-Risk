@@ -3,10 +3,7 @@ modeling
 DecisionTreeOptuna
 LogisticOptuna
 XGBoostOptuna
-decision_tree.dot 
-acquisition_train.csv
-data_newTarget.csv
-data_tratado.csv
+.csv
 README
 **__pycache__
 .venv

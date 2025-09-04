@@ -8,7 +8,7 @@ sys.path.append(r'C:\\Users\\souza\\OneDrive\\Área de Trabalho\\Risk Nubank')
 
 # setando aplicação
 app = FastAPI()
-model_path = os.path.join('DecisionTree.pkl')
+model_path = os.path.join(os.path.dirname(__file__), 'DecisionTree.pkl')
 # carregando modelo 
 model = joblib.load(model_path)
 class ModelInput(BaseModel):
@@ -20,10 +20,9 @@ class ModelInput(BaseModel):
         n_issues:float
         ok_since:float
         n_bankruptcies:float
-        external_data_provider_credit_checks_last_year:int
+        external_data_provider_credit_checks_last_year:float
         external_data_provider_credit_checks_last_month:int
-        external_data_provider_credit_checks_last_2_year:int
-        reported_income:int
+        external_data_provider_credit_checks_last_2_year:float
         score_rating_enc:int
         risk_score: float
 @app.get('/')

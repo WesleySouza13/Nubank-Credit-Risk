@@ -1,16 +1,14 @@
-FROM python:3.11.9-slim
+# syntax=docker/dockerfile:1
 
-WORKDIR /app
+FROM python:3.11.9
 
-# copiar apenas requirements primeiro para cache de instalação
-COPY requirements.txt .
+WORKDIR /appML
 
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements.txt requirements.txt
 
-# copiar o restante do código
-COPY . .
+RUN pip install -r requirements.txt
 
+
+COPY . . 
 EXPOSE 10000
-
-# rodar FastAPI com 4 workers
-CMD ["gunicorn", "app.main:app", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "-b", "0.0.0.0:10000"]
+CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "10000"]

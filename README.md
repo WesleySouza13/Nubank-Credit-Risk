@@ -384,6 +384,15 @@ No caso do Silhouette Score, valores mais próximos de 1 indicam melhor separaç
 
 Já no Davies-Bouldin Score, valores mais próximos de 0 representam melhor qualidade dos clusters. Diferente do Silhouette, não há um intervalo exato definido (como 0–1 ou 0–10), apenas a regra de que quanto menor, melhor.
 
+# Vizualizaçao de clusters
+
+<img width="1490" height="790" alt="image" src="https://github.com/user-attachments/assets/b524afc7-9155-41fb-865a-61d78f1eec92" />
+
+
+
+# Deploy 
+<img width="1584" height="396" alt="image" src="https://github.com/user-attachments/assets/83e290f6-cfde-4401-b180-ed5c47ccfa99" />
+
 
 
 

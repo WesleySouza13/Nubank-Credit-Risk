@@ -437,10 +437,4 @@ O deploy em nuvem utilizando o Render é bem simples. Bastou provisionar o repos
 
 Além disso, o Render já disponibiliza um endpoint público e um pipeline automatizado: sempre que houver novos commits no branch configurado (ex.: main), a aplicação será reconstruída e publicada novamente sem necessidade de intervenção manual.
 
-A API do modelo esta disponivel em: https://model-app-score.onrender.com\
 
-Use o endpoint /predict para realizar requisições.
-
-Observação: o Render pode levar até 5 minutos para inicializar a aplicação. Portanto, não estranhe se a API não responder imediatamente na primeira requisição.
-
-A aplicação está disponível para uso público a todos que acessarem este repositório.

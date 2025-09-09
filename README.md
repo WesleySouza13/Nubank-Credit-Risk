@@ -393,9 +393,13 @@ Já no Davies-Bouldin Score, valores mais próximos de 0 representam melhor qual
 # Deploy 
 <img width="1584" height="396" alt="image" src="https://github.com/user-attachments/assets/83e290f6-cfde-4401-b180-ed5c47ccfa99" />
 
+Para realizar o deploy do modelo, decidi criar uma aplicação web, conteinerizar com Docker e provisionar em nuvem utilizando o Render. Com isso, desenvolvi a seguinte abordagem:
 
+- gateway para verificar status da api
+- gateway para fazer post ('/predict')
 
+**Estrutura da API**
 
-
+<img width="871" height="869" alt="image" src="https://github.com/user-attachments/assets/0d99832d-f8fd-4fae-844e-fc4e45687884" />
 
 

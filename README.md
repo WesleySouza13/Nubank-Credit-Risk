@@ -402,4 +402,45 @@ Para realizar o deploy do modelo, decidi criar uma aplicação web, conteineriza
 
 <img width="871" height="869" alt="image" src="https://github.com/user-attachments/assets/0d99832d-f8fd-4fae-844e-fc4e45687884" />
 
+A API foi para o ar localmente utilizando o framework uvicorn, com o seguinte comando:
 
+$ python -m uvicorn main:app --reload 
+
+- --reload: utilizado apenas em ambiente de desenvolvimento. Ele permite que a API seja atualizada automaticamente a cada alteração no código, sem necessidade de reiniciar manualmente o servidor. Em produção, esse parâmetro não deve ser usado.
+
+**Docker**
+
+Com a API rodando corretamente em ambiente local, criei uma imagem Docker para construir um contêiner e, assim, empacotar a aplicação.
+
+Segue o dockerfile:
+
+<img width="990" height="562" alt="image" src="https://github.com/user-attachments/assets/ed137d4a-3faf-4b38-a984-520005bc0168" />
+
+os comandos docker utilizados foram: 
+
+docker build -t modelo-app-score . # cria o conteiner a partir da imagem 
+
+docker run modelo-app-score # roda conteiner
+
+
+**Render**
+
+O deploy em nuvem utilizando o Render é bem simples. Bastou provisionar o repositório no GitHub para a aplicação, e o Render automaticamente:
+
+- identificou o Dockerfile na raiz do projeto,
+
+- fez o download das dependências,
+
+- construiu a imagem 
+
+- colocou a API no ar.
+
+Além disso, o Render já disponibiliza um endpoint público e um pipeline automatizado: sempre que houver novos commits no branch configurado (ex.: main), a aplicação será reconstruída e publicada novamente sem necessidade de intervenção manual.
+
+A API do modelo esta disponivel em: https://model-app-score.onrender.com\
+
+Use o endpoint /predict para realizar requisições.
+
+Observação: o Render pode levar até 5 minutos para inicializar a aplicação. Portanto, não estranhe se a API não responder imediatamente na primeira requisição.
+
+A aplicação está disponível para uso público a todos que acessarem este repositório.
